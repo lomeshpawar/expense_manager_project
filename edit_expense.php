@@ -1,37 +1,50 @@
 <?php
-session_start();
+
+include 'includes/auth_check.php';
 include 'db.php';
 
-$id = $_GET['id'];
+$user_id = (int) $_SESSION['user_id'];
+$id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
 
-$query = "SELECT * FROM expenses WHERE id='$id'";
-
-$result = mysqli_query($conn,$query);
-
-$row = mysqli_fetch_assoc($result);
-
-if(isset($_POST['update'])){
-
-    $category = $_POST['category'];
-    $amount = $_POST['amount'];
-    $expense_date = $_POST['expense_date'];
-    $description = $_POST['description'];
-
-    $sql = "UPDATE expenses SET
-
-            category='$category',
-            amount='$amount',
-            expense_date='$expense_date',
-            description='$description'
-
-            WHERE id='$id'";
-
-    if(mysqli_query($conn,$sql)){
-        header("Location: dashboard.php");
-    }
+if ($id === false || $id === null || $id <= 0) {
+    http_response_code(400);
+    exit('Invalid expense ID.');
 }
-?>
 
+$stmt = mysqli_prepare($conn, 'SELECT category, amount, expense_date, description FROM expenses WHERE id = ? AND user_id = ? LIMIT 1');
+mysqli_stmt_bind_param($stmt, 'ii', $id, $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$row = mysqli_fetch_assoc($result);
+mysqli_stmt_close($stmt);
+
+if (!$row) {
+    http_response_code(404);
+    exit('Expense not found.');
+}
+
+if (isset($_POST['update'])) {
+    $category = trim($_POST['category'] ?? '');
+    $amount = filter_var($_POST['amount'] ?? null, FILTER_VALIDATE_FLOAT);
+    $expense_date = $_POST['expense_date'] ?? '';
+    $description = trim($_POST['description'] ?? '');
+    $allowed_categories = ['Food', 'Travel', 'Shopping', 'Bills', 'Others'];
+
+    if (!in_array($category, $allowed_categories, true) || $amount === false || $amount <= 0 || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $expense_date)) {
+        http_response_code(400);
+        exit('Please provide valid expense details.');
+    }
+
+    $stmt = mysqli_prepare($conn, 'UPDATE expenses SET category = ?, amount = ?, expense_date = ?, description = ? WHERE id = ? AND user_id = ?');
+    mysqli_stmt_bind_param($stmt, 'sdssii', $category, $amount, $expense_date, $description, $id, $user_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    header('Location: dashboard.php');
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,38 +52,21 @@ if(isset($_POST['update'])){
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
 <div class="container">
-
 <h2>Edit Expense</h2>
-
 <form method="POST">
-
-<select name="category">
-
-<option><?php echo $row['category']; ?></option>
-<option>Food</option>
-<option>Travel</option>
-<option>Shopping</option>
-<option>Bills</option>
-<option>Others</option>
-
+<select name="category" required>
+<option value="Food" <?php echo $row['category'] === 'Food' ? 'selected' : ''; ?>>Food</option>
+<option value="Travel" <?php echo $row['category'] === 'Travel' ? 'selected' : ''; ?>>Travel</option>
+<option value="Shopping" <?php echo $row['category'] === 'Shopping' ? 'selected' : ''; ?>>Shopping</option>
+<option value="Bills" <?php echo $row['category'] === 'Bills' ? 'selected' : ''; ?>>Bills</option>
+<option value="Others" <?php echo $row['category'] === 'Others' ? 'selected' : ''; ?>>Others</option>
 </select>
-
-<input type="number" name="amount"
-value="<?php echo $row['amount']; ?>">
-
-<input type="date" name="expense_date"
-value="<?php echo $row['expense_date']; ?>">
-
-<input type="text" name="description"
-value="<?php echo $row['description']; ?>">
-
+<input type="number" name="amount" value="<?php echo htmlspecialchars($row['amount'], ENT_QUOTES, 'UTF-8'); ?>" min="0.01" step="0.01" required>
+<input type="date" name="expense_date" value="<?php echo htmlspecialchars($row['expense_date'], ENT_QUOTES, 'UTF-8'); ?>" required>
+<input type="text" name="description" value="<?php echo htmlspecialchars($row['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
 <button type="submit" name="update">Update</button>
-
 </form>
-
 </div>
-
 </body>
 </html>
