@@ -34,36 +34,16 @@ jobs:
           cat > _site/index.html <<'HTML'
           <!doctype html>
           <html lang="en">
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta name="description" content="Expense Manager PHP and MySQL portfolio project.">
-            <title>Expense Manager — Static Preview</title>
-            <style>
-              :root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#101827;color:#f8fafc}
-              *{box-sizing:border-box}body{margin:0;line-height:1.65;background:radial-gradient(ellipse at 15% 5%,#263b5b 0,transparent 45%),#101827}
-              main{max-width:900px;margin:auto;padding:60px 24px}h1{font-size:clamp(2.4rem,6vw,4.3rem);line-height:1.1;margin:.6em 0}p,li{color:#cbd5e1}
-              .tag{color:#93c5fd;border:1px solid #3b82f6;border-radius:99px;padding:5px 12px}.card{background:#172033;border:1px solid #344256;border-radius:18px;padding:24px;margin:24px 0}
-              a{color:#93c5fd}code{color:#bfdbfe}footer{color:#94a3b8;margin-top:40px;font-size:.9rem}
-            </style>
-          </head>
-          <body><main>
-            <span class="tag">PHP · MySQL · CRUD</span>
-            <h1>Expense Manager</h1>
-            <p>A portfolio project for recording personal income and expenses through a browser-based interface, demonstrating PHP, database CRUD operations, sessions, and reports.</p>
-            <section class="card"><h2>Project features</h2>
-              <ul><li>User registration and login flows</li><li>Income and expense records</li><li>Dashboard and reports</li><li>Profile and password-management pages</li></ul>
-            </section>
-            <section class="card"><h2>Static preview limitation</h2>
-              <p>This GitHub Pages site is an informational preview only. GitHub Pages does not execute PHP, manage sessions, or connect to MySQL. The complete application must run on a PHP-capable host with a configured MySQL/MariaDB database.</p>
-              <p><a href="https://github.com/lomeshpawar/expense_manager_project">View source code and setup instructions on GitHub →</a></p>
-            </section>
-            <section class="card"><h2>Run locally</h2><p>Use XAMPP or a comparable PHP/MySQL environment, import the SQL schema from the <code>database/</code> folder, configure local database settings, and open <code>http://localhost/expense_manager_project/</code>.</p></section>
-            <footer>Built by Lomesh Pawar · Academic portfolio project</footer>
-          </main></body></html>
+          <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Expense Manager — Static Preview</title>
+          <style>
+          :root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;background:#101827;color:#f8fafc}*{box-sizing:border-box}body{margin:0;line-height:1.65;background:radial-gradient(ellipse at 15% 5%,#263b5b 0,transparent 45%),#101827}main{max-width:900px;margin:auto;padding:60px 24px}h1{font-size:clamp(2.4rem,6vw,4.3rem);line-height:1.1;margin:.6em 0}p,li{color:#cbd5e1}.tag{color:#93c5fd;border:1px solid #3b82f6;border-radius:99px;padding:5px 12px}.card{background:#172033;border:1px solid #344256;border-radius:18px;padding:24px;margin:24px 0}a{color:#93c5fd}code{color:#bfdbfe}footer{color:#94a3b8;margin-top:40px;font-size:.9rem}
+          </style></head><body><main><span class="tag">PHP · MySQL · CRUD</span><h1>Expense Manager</h1>
+          <p>A portfolio project for recording personal income and expenses through a browser-based interface, demonstrating PHP, database CRUD operations, sessions, and reports.</p>
+          <section class="card"><h2>Project features</h2><ul><li>User registration and login flows</li><li>Income and expense records</li><li>Dashboard and reports</li><li>Profile and password-management pages</li></ul></section>
+          <section class="card"><h2>Static preview limitation</h2><p>This is an informational preview only. GitHub Pages does not execute PHP, manage sessions, or connect to MySQL. The complete application must run on a PHP-capable host with a configured MySQL/MariaDB database.</p><p><a href="https://github.com/lomeshpawar/expense_manager_project">View source code and setup instructions on GitHub →</a></p></section>
+          <section class="card"><h2>Run locally</h2><p>Use XAMPP or a comparable PHP/MySQL environment, import the SQL schema from the <code>database/</code> folder, configure local database settings, and open <code>http://localhost/expense_manager_project/</code>.</p></section>
+          <footer>Built by Lomesh Pawar · Academic portfolio project</footer></main></body></html>
           HTML
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
