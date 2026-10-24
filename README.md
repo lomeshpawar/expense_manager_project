@@ -1,163 +1,104 @@
 # Expense Manager
 
-A lightweight PHP and MySQL web application for recording personal income and expenses through a browser-based interface.
+A PHP and MySQL web application for tracking personal income and expenses. This project demonstrates server-rendered pages, session-based user flows, database-backed CRUD operations, and dashboard/reporting interfaces.
 
-> **Project status:** Educational / portfolio project. The application is suitable for local development and demonstrates PHP, MySQL, CRUD workflows, sessions, and basic web application structure. Review the security notes before any production deployment.
+## Hosting status
 
-## What this project demonstrates
+**Repository:** https://github.com/lomeshpawar/expense_manager_project
 
-- Server-side PHP application development
-- MySQL / MariaDB integration
-- CRUD operations for expense records
-- Income tracking and dashboard views
-- Session-based user flows
-- Profile and password-management workflows
-- HTML, CSS, and JavaScript integration
-- Local deployment with Apache/XAMPP/WAMP
+This is a PHP application and requires a PHP-capable server plus a MySQL/MariaDB database. GitHub Pages cannot execute PHP or connect to its database, and this repository does not currently contain a GitHub Pages deployment workflow. The full application is intended to run locally or on a suitable PHP host.
 
 ## Features
 
-- User registration and login
-- Session-based authentication
-- Add, edit, and delete expenses
-- Record income
-- Dashboard for financial activity
+- User registration, login, and logout
+- Add, edit, and delete expense records
+- Income tracking
+- Dashboard and reports
 - Profile management
-- Password-change flow
-- MySQL database integration
-- Responsive styling and client-side JavaScript
+- Password-change workflow
+- MySQL/MariaDB integration
+- HTML, CSS, and JavaScript interface
 
-## Technology Stack
+## Technology stack
 
 | Layer | Technology |
 |---|---|
-| Backend | PHP |
+| Web backend | PHP |
 | Database | MySQL / MariaDB |
 | Frontend | HTML, CSS, JavaScript |
-| Local server | Apache via XAMPP/WAMP or equivalent |
+| Local development | XAMPP, WAMP, or equivalent Apache/PHP stack |
 
-## Project Structure
+## Project structure
 
 ```text
 expense_manager_project/
 ├── css/                 # Stylesheets
-├── database/            # Database scripts/schema
-├── images/              # Images and static assets
+├── js/                  # Browser-side JavaScript
+├── images/              # Static image assets
 ├── includes/            # Shared PHP components
-├── js/                  # Client-side JavaScript
+├── database/            # Database scripts
+├── index.php            # Application entry point
+├── login.php            # Login
+├── register.php         # Registration
+├── dashboard.php        # Main dashboard
 ├── add_expense.php      # Create expense
 ├── edit_expense.php     # Update expense
 ├── delete_expense.php   # Delete expense
 ├── income.php           # Income management
-├── dashboard.php        # Authenticated dashboard
-├── login.php            # Authentication
-├── logout.php           # Session logout
+├── reports.php          # Reports
 ├── profile.php          # User profile
-├── change_password.php  # Password management
-├── register.php         # User registration
+├── change_password.php  # Password change
 ├── db.php               # Database connection
-└── index.php            # Application entry point
+└── .env.example         # Example configuration
 ```
 
-## Requirements
+## Run locally on Windows
 
-- PHP 7.4 or newer (PHP 8.x recommended)
-- MySQL 5.7+ or MariaDB
-- Apache or another PHP-compatible web server
+### 1. Install and start XAMPP
 
-## Run Locally
+Start **Apache** and **MySQL** from the XAMPP Control Panel.
 
-### 1. Clone the repository
+### 2. Place the project in the web root
 
-Place the project inside the document root of XAMPP, WAMP, or your PHP web server.
-
-### 2. Create the database
-
-Create a database named `expense_manager` and import the SQL schema available under `database/`.
-
-### 3. Configure the database
-
-For local development, the application supports the following environment variables:
+Copy this repository folder into:
 
 ```text
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=
-DB_NAME=expense_manager
-DB_PORT=3306
+C:\xampp\htdocs\expense_manager_project
 ```
 
-Do not commit real credentials to Git.
+### 3. Create the database
 
-### 4. Start the services
+Open phpMyAdmin at `http://localhost/phpmyadmin`. Create a database named `expense_manager`, then import the SQL schema provided in the `database/` directory. Check the database scripts for the exact table definitions.
 
-Start Apache and MySQL from your local development environment.
+### 4. Configure the database connection
 
-### 5. Open the application
+The application reads `DB_HOST`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME` environment variables in `db.php`, with local development defaults. Configure the settings for your environment and never commit real database credentials.
+
+### 5. Open the app
+
+Visit:
 
 ```text
 http://localhost/expense_manager_project/
 ```
 
-## Typical User Flow
+## Deploying online
 
-```text
-Register → Login → Dashboard → Add Income/Expense
-                         ↓
-                  Edit / Delete Records
-                         ↓
-                  Profile / Password
-                         ↓
-                       Logout
-```
+To host the full app publicly, choose a PHP-compatible host and a supported MySQL/MariaDB instance. Configure database environment variables in the hosting dashboard, import the schema, set up HTTPS, and verify all routes on the deployed host. A static GitHub Pages upload is not a substitute for PHP hosting.
 
-## Security Status
+## Security and testing
 
-This is a portfolio/learning project and should **not** be treated as production-ready authentication yet.
+This is an educational portfolio project and should be reviewed before being used with real personal or financial data. Priorities include using `password_hash()` and `password_verify()`, prepared statements for SQL operations, CSRF tokens on state-changing forms, robust server-side validation, and secure session-cookie settings. Do not claim production readiness until these controls have been verified in the code and tested.
 
-The repository is being incrementally hardened. Priority security improvements include:
+Suggested manual smoke test:
 
-- Use `password_hash()` and `password_verify()` for passwords
-- Replace dynamically constructed SQL with prepared statements
-- Add CSRF protection to state-changing forms
-- Strengthen session and cookie configuration
-- Validate and sanitize server-side input consistently
-- Keep database credentials outside source control
+1. Register and log in.
+2. Add income and expense entries.
+3. Edit and delete an expense.
+4. Review dashboard and reports.
+5. Update profile details and test password change.
+6. Log out and confirm authenticated pages are protected.
 
-If you discover a security issue, do not publish credentials or sensitive values in an issue or pull request.
+## Author
 
-## Testing
-
-The project currently relies primarily on manual functional verification. A useful smoke-test flow is:
-
-1. Register a user.
-2. Log in.
-3. Open the dashboard.
-4. Add an income record.
-5. Add an expense.
-6. Edit the expense.
-7. Delete the expense.
-8. Update profile information.
-9. Test the password-change flow.
-10. Log out and confirm the authenticated pages are protected.
-
-Automated PHP tests are planned as the project is hardened.
-
-## Development Roadmap
-
-- [x] Document project structure and local setup
-- [x] Externalize database configuration through environment variables
-- [ ] Replace legacy password handling with secure password hashing
-- [ ] Convert database operations to prepared statements
-- [ ] Add CSRF protection
-- [ ] Add automated PHP tests
-- [ ] Expand CI checks
-- [ ] Add deployment documentation
-
-## Contributing
-
-For portfolio development, changes should be small and focused. Use a feature branch for meaningful changes, verify the application locally, and open a pull request with a clear explanation of the change.
-
-## License
-
-No open-source license is currently declared. Add a license file if this project is intended to be reused or distributed as open-source software.
+**Lomesh Pawar** · [GitHub](https://github.com/lomeshpawar)
