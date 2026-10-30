@@ -2,11 +2,13 @@
 
 A PHP and MySQL web application for tracking personal income and expenses. This project demonstrates server-rendered pages, session-based user flows, database-backed CRUD operations, and dashboard/reporting interfaces.
 
+[![PHP Validation](https://github.com/lomeshpawar/expense_manager_project/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/lomeshpawar/expense_manager_project/actions/workflows/php.yml)
+
 ## Hosting status
 
 **Repository:** https://github.com/lomeshpawar/expense_manager_project
 
-This is a PHP application and requires a PHP-capable server plus a MySQL/MariaDB database. GitHub Pages cannot execute PHP or connect to its database, and this repository does not currently contain a GitHub Pages deployment workflow. The full application is intended to run locally or on a suitable PHP host.
+This is a PHP application and requires a PHP-capable server plus a MySQL/MariaDB database. GitHub Pages cannot execute PHP or connect to its database. The repository does include `.github/workflows/pages.yml`, which builds an informational static preview only; it does not host the PHP application. The latest recorded deployment attempt on 24 October 2026 failed with HTTP 404 because GitHub Pages was not enabled for the repository. To publish the preview, enable Pages in **Settings → Pages**, choose **GitHub Actions** as the source, and rerun the workflow. The full application must still run locally or on a suitable PHP host.
 
 ## Features
 
@@ -87,6 +89,8 @@ http://localhost/expense_manager_project/
 To host the full app publicly, choose a PHP-compatible host and a supported MySQL/MariaDB instance. Configure database environment variables in the hosting dashboard, import the schema, set up HTTPS, and verify all routes on the deployed host. A static GitHub Pages upload is not a substitute for PHP hosting.
 
 ## Security and testing
+
+The `PHP Validation` GitHub Actions workflow runs PHP 8.2 syntax checks (`php -l`) across the tracked PHP source. It does not currently run automated functional or integration tests; the checklist below is a manual smoke test, not an automated test report.
 
 This is an educational portfolio project and should be reviewed before being used with real personal or financial data. Priorities include using `password_hash()` and `password_verify()`, prepared statements for SQL operations, CSRF tokens on state-changing forms, robust server-side validation, and secure session-cookie settings. Do not claim production readiness until these controls have been verified in the code and tested.
 
