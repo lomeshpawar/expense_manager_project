@@ -8,7 +8,7 @@ A PHP and MySQL web application for tracking personal income and expenses. This 
 
 **Repository:** https://github.com/lomeshpawar/expense_manager_project
 
-This is a PHP application and requires a PHP-capable server plus a MySQL/MariaDB database. GitHub Pages cannot execute PHP or connect to its database. The repository does include `.github/workflows/pages.yml`, which builds an informational static preview only; it does not host the PHP application. The latest recorded deployment attempt on 24 October 2026 failed with HTTP 404 because GitHub Pages was not enabled for the repository. To publish the preview, enable Pages in **Settings → Pages**, choose **GitHub Actions** as the source, and rerun the workflow. The full application must still run locally or on a suitable PHP host.
+This is a PHP application and requires a PHP-capable server plus a MySQL/MariaDB database. GitHub Pages cannot execute PHP or connect to its database. The repository does include `.github/workflows/pages.yml`, which builds an informational static preview only; it does not host the PHP application. The latest recorded deployment attempt on 30 October 2026 failed with HTTP 404 because GitHub Pages was not enabled for the repository ([run #41108763128](https://github.com/lomeshpawar/expense_manager_project/actions/runs/41108763128)). To publish the preview, enable Pages in **Settings → Pages**, choose **GitHub Actions** as the source, and rerun the workflow. The full application must still run locally or on a suitable PHP host.
 
 ## Features
 
