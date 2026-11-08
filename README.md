@@ -92,7 +92,7 @@ To host the full app publicly, choose a PHP-compatible host and a supported MySQ
 
 The `PHP Validation` GitHub Actions workflow runs PHP 8.2 syntax checks (`php -l`) across the tracked PHP source. It does not currently run automated functional or integration tests; the checklist below is a manual smoke test, not an automated test report.
 
-This is an educational portfolio project and should be reviewed before being used with real personal or financial data. Priorities include using `password_hash()` and `password_verify()`, prepared statements for SQL operations, CSRF tokens on state-changing forms, robust server-side validation, and secure session-cookie settings. Do not claim production readiness until these controls have been verified in the code and tested.
+This is an educational portfolio project and should not be used with real personal or financial data. Registration and login currently use `password_hash()` / `password_verify()` and prepared statements, but `change_password.php` still uses MD5, and several expense, income, profile, and report queries interpolate values into SQL. Record ownership checks, CSRF protection, robust server-side validation, and safe profile-image handling are also incomplete. See [security issue #5](https://github.com/lomeshpawar/expense_manager_project/issues/5). Do not claim production readiness until these controls are implemented and tested.
 
 Suggested manual smoke test:
 
