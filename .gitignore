@@ -18,6 +18,9 @@
 .DS_Store
 Thumbs.db
 
+# User-uploaded content must not be added to source control
+/uploads/*
+
 # Local development / server files
 php_errorlog
 error_log
